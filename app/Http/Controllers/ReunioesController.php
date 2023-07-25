@@ -47,7 +47,8 @@ class ReunioesController extends Controller
     }
 
     public function getInfoPanel()
-    {
+    {   
+        $setores = Departamento::readAll();
         //total de reunioes
         $reunioes = Reunioes::readAll();
         $totalReunioes = count($reunioes);
@@ -71,7 +72,9 @@ class ReunioesController extends Controller
             'espacos' => $salas,
             'ocupacaoSala' => $salasOcupadas,
             'reunioes' => $reunioes,
-            'departamento' => $departamentos
+            'departamento' => $departamentos,
+            'salas' => $salas,
+            'departamentos' => $setores
         ]);
     }
 
@@ -92,7 +95,7 @@ class ReunioesController extends Controller
                 return redirect('/painel')->with('failed', 'Reunião já existente.');
             }
 
-            $reuniao->fill($request->all());
+            dd($reuniao->fill($request->all()));
             $reuniao->save();
             return redirect('/painel'); 
         
