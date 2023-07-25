@@ -1,8 +1,4 @@
-<link
-      href="{{asset('vendor/fontawesome-free/css/all.min.css')}}"
-      rel="stylesheet"
-      type="text/css"
-    />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link
       href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
       rel="stylesheet"
@@ -81,7 +77,7 @@
                   aria-expanded="false"
                 >
                   <span class="mr-2 d-none d-lg-inline text-gray-600 small"
-                    >Douglas</span
+                    >User</span
                   >
                   <img
                     class="img-profile rounded-circle"
@@ -136,7 +132,7 @@
                           Reuniões
                         </div>
                         <div class="h5 mb-0 font-weight-bold text-gray-800">
-                        10
+                        --
                         </div>
                       </div>
                       <div class="col-auto">
@@ -159,7 +155,7 @@
                           Em progresso
                         </div>
                         <div class="h5 mb-0 font-weight-bold text-gray-800">
-                          3
+                          --
                         </div>
                       </div>
                       <div class="col-auto">
@@ -186,7 +182,7 @@
                             <div
                               class="h5 mb-0 mr-3 font-weight-bold text-gray-800"
                             >
-                              50%
+                              --
                             </div>
                           </div>
                           <div class="col">
@@ -438,7 +434,8 @@
 
                                     <!-- Modal body -->
                                     <div class="modal-body">
-                                        <form action="{{ route('reunioes.create') }}" method="POST">
+                                        <form action="{{ route('salas.create') }}" method="POST">
+                                          @csrf
                                             <div class="form-group">
                                                 <label for="des_sala">Descrição sala:</label>
                                                 <input type="text" name="des_sala" id="des_sala" required>
@@ -507,8 +504,7 @@
 
                                     <!-- Modal body -->
                                     <div class="modal-body">
-                                        <form action="{{ route('departamentos.create') }}" method="POST">
-                                          @csrf
+                                        <form action="{{ route('reunioes.create') }}" method="POST">
                                             <div class="form-group">
                                                 <label for="nome">Nome departamento:</label>
                                                 <input type="text" name="nome" id="nome" required>
@@ -601,12 +597,67 @@
     </div>
 
     <!-- Bootstrap core JavaScript-->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.7.0.min.js"
+      integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g="
+      crossorigin="anonymous"
+    ></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- Core plugin JavaScript-->
     <script src="{{asset('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="{{asset('js/sb-admin-2.min.js')}}"></script>
+    <script>
+        /*!
+ * Start Bootstrap - SB Admin 2 v4.1.3 (https://startbootstrap.com/theme/sb-admin-2)
+ * Copyright 2013-2021 Start Bootstrap
+ * Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-sb-admin-2/blob/master/LICENSE)
+ */
+
+!(function (l) {
+  "use strict";
+  l("#sidebarToggle, #sidebarToggleTop").on("click", function (e) {
+    l("body").toggleClass("sidebar-toggled"),
+      l(".sidebar").toggleClass("toggled"),
+      l(".sidebar").hasClass("toggled") &&
+        l(".sidebar .collapse").collapse("hide");
+  }),
+    l(window).resize(function () {
+      l(window).width() < 768 && l(".sidebar .collapse").collapse("hide"),
+        l(window).width() < 480 &&
+          !l(".sidebar").hasClass("toggled") &&
+          (l("body").addClass("sidebar-toggled"),
+          l(".sidebar").addClass("toggled"),
+          l(".sidebar .collapse").collapse("hide"));
+    }),
+    l("body.fixed-nav .sidebar").on(
+      "mousewheel DOMMouseScroll wheel",
+      function (e) {
+        var o;
+        768 < l(window).width() &&
+          ((o = (o = e.originalEvent).wheelDelta || -o.detail),
+          (this.scrollTop += 30 * (o < 0 ? 1 : -1)),
+          e.preventDefault());
+      }
+    ),
+    l(document).on("scroll", function () {
+      100 < l(this).scrollTop()
+        ? l(".scroll-to-top").fadeIn()
+        : l(".scroll-to-top").fadeOut();
+    }),
+    l(document).on("click", "a.scroll-to-top", function (e) {
+      var o = l(this);
+      l("html, body")
+        .stop()
+        .animate(
+          { scrollTop: l(o.attr("href")).offset().top },
+          1e3,
+          "easeInOutExpo"
+        ),
+        e.preventDefault();
+    });
+})(jQuery);
+
+    </script>

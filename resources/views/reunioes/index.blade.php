@@ -1,11 +1,6 @@
 @extends('layout.header')
 
 @section('content')
-@if(session('success'))
-    <div class="alert alert-success">
-        {{ session('success') }}
-    </div>
-@endif
     <h1>Lista de Reuniões</h1>
     <button class="btn btn-primary" data-toggle="modal" data-target="#modalCriarReuniao">Criar Nova Reunião</button>
     <ul>

@@ -8,6 +8,8 @@ use App\Models\Departamento;
 use App\Models\Sala;
 use App\Models\User;
 
+
+
 class ReunioesController extends Controller
 {
     public function index()
@@ -26,7 +28,10 @@ class ReunioesController extends Controller
         }
     }
 
-    
+    public function create()
+    {
+        return view('reunioes.create');
+    }
 
     public function getDepartments()
     {
@@ -56,41 +61,42 @@ class ReunioesController extends Controller
             ['dta_acontecimento', 'like', '%' . date('Y-m-d') . '%']
         ])->get();
         $salasOcupadas = number_format( ( (count($reunioesQtd) / $totalSalas )*100), 0, '', '') . '%';
-        
+
+        //Departamentos
+        $departamentos = Departamento::readAll();
+
         return view('painel', [
             'totalReunioes' => $totalReunioes,
             'totalEspacos' => $totalSalas,
-            'ocupacaoSala' => $salasOcupadas
+            'espacos' => $salas,
+            'ocupacaoSala' => $salasOcupadas,
+            'reunioes' => $reunioes,
+            'departamento' => $departamentos
         ]);
     }
 
+
    
 
-  
-        // Criar a reunião no banco de dados
+       
         public function store(Request $request)
         {
-            // Validar os dados do formulário
-            $validatedData = $request->validate([
-                'dta_acontecimento' => 'required|date',
-                'duracao' => 'required|numeric',
-                'nome' => 'required|string',
-                'organizador' => 'nullable|integer',
-                'tipo' => 'nullable|string|max:50',
-                'dta_criacao' => 'nullable|date',
-                'hora_inicio' => 'nullable|date',
-                'departamento' => 'nullable|integer',
-                'sala' => 'nullable|integer',
-                '_token' => 'string'
-            ]);
+          
+            $reuniao = new Reunioes();
+
+            $existsReunioes = Reunioes::where([
+                ['dta_acontecimento', 'like', '%' . $request['dta_acontecimento'] . '%']
+            ])->get();
+
+            if($existsReunioes){
+                return redirect('/painel')->with('failed', 'Reunião já existente.');
+            }
+
+            $reuniao->fill($request->all());
+            $reuniao->save();
+            return redirect('/painel'); 
         
-            // Criar a reunião no banco de dados
-            $reuniao = Reunioes::create($validatedData);
-        
-            // Redirecionar para a página de listagem com a mensagem de sucesso
-            return 'true';
         }
-        
 
     public function edit($id)
     {

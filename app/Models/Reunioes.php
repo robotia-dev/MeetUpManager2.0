@@ -11,6 +11,7 @@ class Reunioes extends Model
     protected $table = 'GerencReunioes';
 
     protected $fillable = [
+        '_token',
         'dta_acontecimento',
         'duracao',
         'nome',
@@ -20,9 +21,8 @@ class Reunioes extends Model
         'hora_inicio',
         'departamento',
         'sala',
-        'datetime',
-        'datetime',
-        '_token'
+        'created_at',
+        'updated_at'
     ];
 
 public static function readAll()

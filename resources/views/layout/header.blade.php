@@ -9,8 +9,8 @@
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="{{asset('vendor/bootstrap/css/bootstrap.min.css')}}">
 <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="{{asset('fonts/font-awesome-4.7.0/css/font-awesome.min.css')}}">
-<!--===============================================================================================-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="{{asset('fonts/iconic/css/material-design-iconic-font.min.css')}}">
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="{{asset('vendor/animate/animate.css')}}">
@@ -73,7 +73,7 @@
 <!--===============================================================================================-->
 </head>
 <body>
-    <header>
+    <!-- <header>
     <div class="logo">
         <a style='color:white;'>Meet Up manager</a>
     </div>
@@ -81,7 +81,7 @@
         <ul></ul>
     </div>
 
-    </header>
+    </header> -->
     <main>
         <!-- O conteúdo principal da página será inserido aqui -->
         @yield('content')

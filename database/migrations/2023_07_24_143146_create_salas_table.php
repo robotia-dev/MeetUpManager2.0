@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('des_sala', 50)->nullable();
             $table->integer('capacidade')->nullable();
             $table->string('tipo', 50)->nullable();
+            $table->string('_token', 50)->nullable();
             $table->timestamps();
         });
     }

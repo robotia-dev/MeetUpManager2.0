@@ -10,6 +10,7 @@ class Sala extends Model
     use HasFactory;
 
     protected $table = 'salas';
+    protected $fillable = ['_token','des_sala','capacidade','tipo'];
     public static function readAll()
     {
         return Sala::all();

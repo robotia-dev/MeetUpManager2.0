@@ -2,7 +2,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Reunioes;
 use App\Models\Departamento;
+use App\Models\Sala;
+use App\Models\User;
+
 
 class DepartamentoController extends Controller
 {

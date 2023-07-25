@@ -76,7 +76,7 @@
                   aria-expanded="false"
                 >
                   <span class="mr-2 d-none d-lg-inline text-gray-600 small"
-                    >Douglas</span
+                    >User</span
                   >
                   <img
                     class="img-profile rounded-circle"
@@ -182,7 +182,7 @@
                             <div
                               class="h5 mb-0 mr-3 font-weight-bold text-gray-800"
                             >
-                              50%
+                              {{ $ocupacaoSala }}
                             </div>
                           </div>
                           <div class="col">
@@ -221,7 +221,7 @@
                           Espaços para reuniões
                         </div>
                         <div class="h5 mb-0 font-weight-bold text-gray-800">
-                          3
+                          {{$totalEspacos}}
                         </div>
                       </div>
                       <div class="col-auto">
@@ -240,38 +240,31 @@
               <div class="col-lg-6 mb-4">
                 <!-- Illustrations -->
                 <div class="card shadow mb-4">
-                  <div class="card-header py-3">
+                <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold text-primary">
-                      Reuniões em andamento
+                        Reuniões em andamento
                     </h6>
-                  </div>
-                  <div class="card-body">
-                    <div class="cards row">
-                      <div class="card-reuniao col-md-5">
-                        <p>Departamento: <span>TI</span></p>
-                        <p>Horário: <span>14:00 horas</span></p>
-                        <p>Tempo: <span>30 minutos</span></p>
-                      </div>
-                      <div class="card-reuniao col-md-5">
-                        <p>Departamento: <span>TI</span></p>
-                        <p>Horário: <span>14:00 horas</span></p>
-                        <p>Tempo: <span>30 minutos</span></p>
-                      </div>
-                    </div>
-                    <div class="cards row">
-                      <div class="card-reuniao col-md-5">
-                        <p>Departamento: <span>TI</span></p>
-                        <p>Horário: <span>14:00 horas</span></p>
-                        <p>Tempo: <span>30 minutos</span></p>
-                      </div>
-                      <div class="card-reuniao col-md-5">
-                        <p>Departamento: <span>TI</span></p>
-                        <p>Horário: <span>14:00 horas</span></p>
-                        <p>Tempo: <span>30 minutos</span></p>
-                      </div>
-                    </div>
-                  </div>
                 </div>
+                @php
+    use Carbon\Carbon;
+@endphp
+                <div class="card-body">
+                    <div class="cards row">
+                    @foreach ($reunioes as $reuniao)
+                    <div class="card-reuniao col-md-5">
+                        <p>Departamento: <span>{{ $reuniao->departamento }}</span></p>
+                        <p>Horário: <span>{{ $reuniao->dta_acontecimento }}</span></p>
+                        <p>Tempo Restante: <span>
+                      @php
+                      $remainingTime = Carbon::parse($reuniao->dta_acontecimento)->diffForHumans();
+            echo $remainingTime;
+    @endphp  </span></p>
+                    </div>
+                @endforeach
+
+                    </div>
+                </div>
+            </div>
               </div>
               <div class="col-lg-6 mb-4">
                 <!-- Illustrations -->
@@ -311,33 +304,44 @@
                     <div class="form">
                       <h3>Cadastro de Reuniões</h3>
                       <form action="{{ route('reunioes.create') }}" method="POST">
-                        @csrf
+                          @csrf
                             <label for="nome">Nome:</label>
                             <input type="text" name="nome" id="nome" required>
 
-                            <label for="dta_acontecimento">Data do acontecimento:</label>
-                            <input type="datetime-local" name="dta_acontecimento" id="dta_acontecimento" required>
+                            </div>
+                            <div class="form-group">
 
-                            <label for="duracao">Duração (em horas):</label>
-                            <input type="number" step="0.01" name="duracao" id="duracao" required>
+                                <label for="organizador">ID do organizador:</label>
+                                <input type="number" name="organizador" id="organizador" required>
 
-                            <label for="organizador">ID do organizador:</label>
-                            <input type="number" name="organizador" id="organizador" required>
+                            </div>
+                            <div class="form-group">
 
-                            <label for="sala">ID da sala:</label>
-                            <input type="number" name="sala" id="sala" required>
+                                <label for="sala">ID da sala:</label>
+                                <input type="number" name="sala" id="sala" required>
+                            </div>
+                            <div class="form-group">
 
-                            <label for="tipo">Tipo:</label>
-                            <input type="text" name="tipo" id="tipo" required>
+                                <label for="tipo">Tipo:</label>
+                                <input type="text" name="tipo" id="tipo" required>
 
-                            <label for="dta_criacao">Data de criação:</label>
-                            <input type="datetime-local" name="dta_criacao" id="dta_criacao" required>
+                            </div>
+                            <div class="form-group">
 
-                            <label for="hora_inicio">Hora de início:</label>
-                            <input type="time" name="hora_inicio" id="hora_inicio" required>
+                                <label for="dta_criacao">Data de criação:</label>
+                                <input type="datetime-local" name="dta_criacao" id="dta_criacao" required>
 
-                            <label for="departamento">ID do departamento:</label>
-                            <input type="number" name="departamento" id="departamento" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="hora_inicio">Hora de início:</label>
+                                <input type="time" name="hora_inicio" id="hora_inicio" required>
+                            </div>
+                            <div class="form-group">
+
+                                <label for="departamento">ID do departamento:</label>
+                                <input type="number" name="departamento" id="departamento" required>
+
+                            </div>
 
                             <button type="submit" class="btn btn-primary">Criar Reunião</button>
                        </form>
@@ -448,8 +452,12 @@
       });
     </script>
     <!-- Bootstrap core JavaScript-->
-    <script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>
-    <script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.7.0.min.js"
+      integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g="
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- Core plugin JavaScript-->
     <script src="{{asset('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
