@@ -19,8 +19,7 @@ return new class extends Migration
             $table->string('nome')->nullable();
             $table->integer('organizador')->nullable();
             $table->string('tipo', 50)->nullable();
-            $table->dateTime('dta_criacao')->nullable();
-            $table->dateTime('hora_inicio')->nullable();
+            $table->dateTime('dta_encerramento')->nullable();
             $table->timestamps();
             $table->integer('departamento')->nullable();
             $table->integer('sala')->nullable();

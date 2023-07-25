@@ -13,12 +13,10 @@ class Reunioes extends Model
     protected $fillable = [
         '_token',
         'dta_acontecimento',
-        'duracao',
         'nome',
         'organizador',
         'tipo',
-        'dta_criacao',
-        'hora_inicio',
+        'dta_encerramento',
         'departamento',
         'sala',
         'created_at',

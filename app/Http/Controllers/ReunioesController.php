@@ -52,6 +52,8 @@ class ReunioesController extends Controller
         $reunioes = Reunioes::readAll();
         $totalReunioes = count($reunioes);
 
+        $users= User::readAll();
+
         //Salas disponiveis
         $salas = Sala::readAll();
         $totalSalas = count($salas);
@@ -71,7 +73,8 @@ class ReunioesController extends Controller
             'espacos' => $salas,
             'ocupacaoSala' => $salasOcupadas,
             'reunioes' => $reunioes,
-            'departamento' => $departamentos
+            'departamentos' => $departamentos,
+            'usuarios' => $users
         ]);
     }
 
@@ -79,25 +82,37 @@ class ReunioesController extends Controller
    
 
        
-        public function store(Request $request)
-        {
-          
-            $reuniao = new Reunioes();
+    public function store(Request $request)
+{
+    try {
+        // Validar os dados do formulário
+        $validatedData = $request->validate([
+            'dta_acontecimento' => 'required|date',
+            'nome' => 'required|string',
+            'organizador' => 'nullable|integer',
+            'tipo' => 'nullable|string|max:50',
+            'dta_criacao' => 'nullable|date',
+            'dta_encerramento' => 'nullable|date',
+            'departamento' => 'nullable|integer',
+            'sala' => 'nullable|integer',
+            '_token' => 'nullable|string'
+        ]);
 
-            $existsReunioes = Reunioes::where([
-                ['dta_acontecimento', 'like', '%' . $request['dta_acontecimento'] . '%']
-            ])->get();
+        // Salvar a reunião no banco de dados
+        $reuniao = new Reunioes();
+        $reuniao->fill($validatedData);
+        $reuniao->save();
 
-            if($existsReunioes){
-                return redirect('/painel')->with('failed', 'Reunião já existente.');
-            }
-
-            $reuniao->fill($request->all());
-            $reuniao->save();
-            return redirect('/painel'); 
-        
-        }
-
+        // Redirecionar para a página de painel
+        return redirect('/painel');
+    } catch (ValidationException $e) {
+        // Redirect back to the previous page with the error messages
+        return redirect()->back()->withErrors($e->errors());
+    } catch (Throwable $e) {
+        // Handle other exceptions
+        return redirect()->back()->with('error', 'Erro ao criar a reunião. Por favor, tente novamente mais tarde.');
+    }
+}
     public function edit($id)
     {
         $reuniao = Reunioes::readById($id);
