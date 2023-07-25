@@ -34,6 +34,7 @@ Route::post('/register', [RegisterController::class, 'registerJson'])->name('reg
 Route::get('/reunioes', [ReunioesController::class, 'index'])->name('reunioes.index');
 
 Route::get('/reunioes-by_id', [ReunioesController::class, 'show'])->name('reunioes.show');
+
 Route::post('/reunioes', [ReunioesController::class, 'store'])->name('reunioes.create');
 
 Route::post('/sala', [SalaController::class, 'store'])->name('salas.create');

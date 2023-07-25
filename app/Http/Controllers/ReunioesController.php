@@ -47,7 +47,8 @@ class ReunioesController extends Controller
     }
 
     public function getInfoPanel()
-    {
+    {   
+        $setores = Departamento::readAll();
         //total de reunioes
         $reunioes = Reunioes::readAll();
         $totalReunioes = count($reunioes);
