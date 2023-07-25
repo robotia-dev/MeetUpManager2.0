@@ -246,8 +246,8 @@
                     </h6>
                 </div>
                 @php
-    use Carbon\Carbon;
-@endphp
+                use Carbon\Carbon;
+                @endphp
                 <div class="card-body">
                     <div class="cards row">
                     @foreach ($reunioes as $reuniao)
@@ -257,36 +257,34 @@
                         <p>Tempo Restante: <span>
                       @php
                       $remainingTime = Carbon::parse($reuniao->dta_acontecimento)->diffForHumans();
-            echo $remainingTime;
-    @endphp  </span></p>
+                        echo $remainingTime;
+                        @endphp  </span></p>
                     </div>
                 @endforeach
 
                     </div>
                 </div>
-            </div>
+              </div>
               </div>
               <div class="col-lg-6 mb-4">
                 <!-- Illustrations -->
                 <div class="card shadow mb-4">
-                  <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">
-                      Espaços disponiveis
-                    </h6>
-                  </div>
-                  <div class="card-body">
-                    <div class="cards row">
-                      <div class="card-reuniao col-md-12">
-                        <p>Departamento: <span>TI</span></p>
-                      </div>
-                      <div class="card-reuniao col-md-12">
-                        <p>Departamento: <span>TI</span></p>
-                      </div>
-                      <div class="card-reuniao col-md-12">
-                        <p>Departamento: <span>TI</span></p>
-                      </div>
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">
+                            Espaços disponíveis
+                        </h6>
                     </div>
-                  </div>
+                    <div class="card-body">
+                        <div class="cards row">
+                            @foreach ($espacos as $espaco)
+                            <div class="card-reuniao col-md-12">
+                                <p>Sala: <span>{{ $espaco->des_sala }}</span></p>
+                                <p>Capacidade: <span>{{ $espaco->capacidade }}</span></p>
+                                <p>Tipo: <span>{{ $espaco->tipo }}</span></p>
+                            </div>
+                            @endforeach
+                        </div>
+                    </div>
                 </div>
               </div>
             </div>
@@ -349,8 +347,7 @@
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
+
           <!-- /.container-fluid -->
         </div>
         <!-- End of Main Content -->
