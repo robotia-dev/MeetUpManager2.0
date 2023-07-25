@@ -1,0 +1,31 @@
+.card-reuniao{
+    background: #f1f1f1;
+    padding: 1rem;
+    border-radius: 5px;
+    border-right: 5px solid #222;
+}
+.card-reuniao:nth-child(even){
+
+    border-right: 5px solid green;
+}
+.card-reuniao p{
+    color: #000;
+}
+.card-reuniao span{
+    color: #b10020;
+    font-weight: bold;
+}
+.cards{
+    justify-content: center;
+    gap: 1rem;
+    margin: 1rem 0;
+}
+
+.form-group{
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group input {
+    width: 100%;
+}
