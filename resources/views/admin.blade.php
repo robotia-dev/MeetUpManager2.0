@@ -1,4 +1,4 @@
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link
       href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
       rel="stylesheet"
@@ -118,116 +118,7 @@
               </h1>
             </div>
 
-            <!-- Content Row -->
-            <!-- <div class="row">
-              <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-primary shadow h-100 py-2">
-                  <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                      <div class="col mr-2">
-                        <div
-                          class="text-xs font-weight-bold text-primary text-uppercase mb-1"
-                        >
-                          Reuniões
-                        </div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">
-                        --
-                        </div>
-                      </div>
-                      <div class="col-auto">
-                        <i class="fas fa-calendar fa-2x text-gray-300"></i>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-success shadow h-100 py-2">
-                  <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                      <div class="col mr-2">
-                        <div
-                          class="text-xs font-weight-bold text-success text-uppercase mb-1"
-                        >
-                          Em progresso
-                        </div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">
-                          --
-                        </div>
-                      </div>
-                      <div class="col-auto">
-                        <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-info shadow h-100 py-2">
-                  <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                      <div class="col mr-2">
-                        <div
-                          class="text-xs font-weight-bold text-info text-uppercase mb-1"
-                        >
-                          Ocupação das salas
-                        </div>
-                        <div class="row no-gutters align-items-center">
-                          <div class="col-auto">
-                            <div
-                              class="h5 mb-0 mr-3 font-weight-bold text-gray-800"
-                            >
-                              --
-                            </div>
-                          </div>
-                          <div class="col">
-                            <div class="progress progress-sm mr-2">
-                              <div
-                                class="progress-bar bg-info"
-                                role="progressbar"
-                                style="width: 50%"
-                                aria-valuenow="50"
-                                aria-valuemin="0"
-                                aria-valuemax="100"
-                              ></div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-auto">
-                        <i
-                          class="fas fa-clipboard-list fa-2x text-gray-300"
-                        ></i>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-warning shadow h-100 py-2">
-                  <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                      <div class="col mr-2">
-                        <div
-                          class="text-xs font-weight-bold text-warning text-uppercase mb-1"
-                        >
-                          Espaços para reuniões
-                        </div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">
-                          3
-                        </div>
-                      </div>
-                      <div class="col-auto">
-                        <i class="fas fa-comments fa-2x text-gray-300"></i>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div> -->
+       
 
             <!-- Content Row -->
             <!-- Content Row -->
@@ -260,6 +151,7 @@
                                             <td>{{ $usuario->name }}</td>
                                             <!-- <td>{{ $usuario->email }}</td> -->
                                             <td>
+                                          
                                                 <a href="#" class="delete"><i class="far fa-trash-alt"></i></a>
                                                 <a href="#" class="edit"><i class="far fa-edit"></i></a>
                                             </td>
@@ -379,7 +271,11 @@
                                     <td><span>{{ $sala->des_sala }}</span></td>
                                     <td><span>{{ $sala->capacidade }}</span></td>
                                     <td>
-                                        <a href="#" class="delete"><i class="far fa-trash-alt"></i></a>
+                                    <form action="{{ route('sala.destroy', $sala->id) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger">Excluir<i class="far fa-trash-alt"></i></button>
+</form>
                                         <a href="#" class="edit"><i class="far fa-edit"></i></a>
                                     </td>
                                 </tr>
@@ -448,7 +344,11 @@
                                         <td><span>{{ $departamento->departamento }}</span></td>
                                         <td><span>{{ $departamento->descricao_departamento }}</span></td>
                                         <td>
-                                            <a href="#" class="delete"><i class="far fa-trash-alt"></i></a>
+                                        <form action="{{ route('departamento.destroy', $departamento->id) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger">Excluir<i class="far fa-trash-alt"></i></button>
+</form>
                                             <a href="#" class="edit"><i class="far fa-edit"></i></a>
                                         </td>
                                     </tr>
@@ -474,7 +374,7 @@
 
                                     <!-- Modal body -->
                                     <div class="modal-body">
-                                        <form action="{{ route('reunioes.create') }}" method="POST">
+                                        <form action="{{ route('departamentos.create') }}" method="POST">
                                             <div class="form-group">
                                                 <label for="nome">Nome departamento:</label>
                                                 <input type="text" name="nome" id="nome" required>

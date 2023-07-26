@@ -20,4 +20,20 @@ class SalaController extends Controller
         return redirect('/admin'); 
     
     }
+
+
+    public function destroy($id)
+    {
+        $sala = Sala::find($id);
+
+        if (!$sala) {
+            return back()->with('error', 'Sala não encontrada.');
+        }
+
+        $sala->delete();
+
+        return redirect('/painel')->with('success', 'Sala excluída com sucesso.');
+    }
+
+
 }

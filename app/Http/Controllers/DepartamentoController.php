@@ -24,6 +24,22 @@ class DepartamentoController extends Controller
     
         $departamento->save();
     
-        return redirect('/painel');
+        return redirect('/painel')->with('success', 'Departamento criado com sucesso.');;
     }
+
+    public function destroy($id)
+    {
+        $departamento = Departamento::find($id);
+
+        if (!$departamento) {
+            return back()->with('error', 'Departamento não encontrado.');
+        }
+
+        $departamento->delete();
+
+        return redirect('/painel')->with('success', 'Departamento excluído com sucesso.');
+    }
+
+
+
 }

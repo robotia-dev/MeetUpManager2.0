@@ -1,31 +1,40 @@
-.card-reuniao{
+.card-reuniao {
     background: #f1f1f1;
     padding: 1rem;
     border-radius: 5px;
     border-right: 5px solid #222;
 }
-.card-reuniao:nth-child(even){
-
+.card-reuniao:nth-child(even) {
     border-right: 5px solid green;
 }
-.card-reuniao p{
+.card-reuniao p {
+    font-size: 12px;
     color: #000;
 }
-.card-reuniao span{
+.card-reuniao span {
     color: #b10020;
     font-weight: bold;
 }
-.cards{
+.cards {
     justify-content: center;
     gap: 1rem;
     margin: 1rem 0;
 }
 
-.form-group{
+.form-group {
     display: flex;
     flex-direction: column;
 }
 
 .form-group input {
     width: 100%;
+}
+
+.scroll-lateral {
+    padding: 2rem 0;
+    display: flex;
+    gap: 2rem;
+    width: 100%;
+    overflow-x: auto;
+    white-space: nowrap; /* Impedir que os cards quebrem para uma nova linha */
 }

@@ -2,7 +2,6 @@
 
 @section('content')
 
-
 <!-- Page Wrapper -->
 <div id="wrapper">
   <!-- Sidebar -->
@@ -76,12 +75,12 @@
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
           @if(session('error'))
-{{session('error')}}
-          @endif
+            {{session('error')}}
+                    @endif
 
-          @if(session('sucess'))
-{{session('sucess')}}
-@endif
+                    @if(session('sucess'))
+            {{session('sucess')}}
+            @endif
 
 
           <h1 class="h3 mb-0 text-gray-800">
@@ -191,46 +190,48 @@
         <div class="row">
           <!-- Content Column -->
           <div class="col-lg-6 mb-4">
-            <!-- Illustrations -->
+  <!-- Illustrations -->
             <div class="card shadow mb-4">
-              <div class="card-header py-3">
+                <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">
-                  Reuniões em andamento
+                Reuniões cadastradas
                 </h6>
-              </div>
-              @php
-              use Carbon\Carbon;
-              @endphp
-              <div class="card-body">
-                <div class="cards row">
-                  @foreach ($reunioes as $reuniao)
-                  <div class="card-reuniao col-md-5">
+                </div>
+                @php
+                use Carbon\Carbon;
+                @endphp
+                <div class="card-body">
+                <!-- Adicionar a classe "scroll-lateral" ao contêiner dos cards -->
+                <div class="scroll-lateral">
+                    @foreach ($reunioes as $reuniao)
+                    <div class="card-reuniao col-md-6">
                     <p>Departamento: <span>{{ $reuniao->departamento }}</span></p>
                     <p>Horário: <span>{{ $reuniao->dta_acontecimento }}</span></p>
                     <p>Tempo Restante: <span>
                         @php
                         $remainingTime = Carbon::parse($reuniao->dta_acontecimento)->diffForHumans();
                         echo $remainingTime;
-                        @endphp </span></p>
-                  </div>
-                  @endforeach
-
+                        @endphp
+                        </span>
+                    </p>
+                    </div>
+                    @endforeach
                 </div>
-              </div>
+                </div>
             </div>
-          </div>
+           </div>
           <div class="col-lg-6 mb-4">
             <!-- Illustrations -->
             <div class="card shadow mb-4">
               <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">
-                  Espaços disponíveis
+                  Espaços cadastrados
                 </h6>
               </div>
               <div class="card-body">
-                <div class="cards row">
+                <div class="scroll-lateral">
                   @foreach ($espacos as $espaco)
-                  <div class="card-reuniao col-md-12">
+                  <div class="card-reuniao col-md-10">
                     <p>Sala: <span>{{ $espaco->des_sala }}</span></p>
                     <p>Capacidade: <span>{{ $espaco->capacidade }}</span></p>
                     <p>Tipo: <span>{{ $espaco->tipo }}</span></p>
@@ -252,67 +253,89 @@
                 </h6>
               </div>
               <div class="card-body">
-                <div class="form">
-                  <h3>Cadastro de Reuniões</h3>
-                  <form action="{{ route('reunioes.store') }}" method="POST">
-                    @csrf
-                    <label for="nome">Nome:</label>
-                    <input type="text" name="nome" id="nome" required>
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal2">
+                 Novo
+              </button>
+              <div class="modal" id="myModal2">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
 
-                </div>
-                <div class="form-group">
+                                <!-- Modal Header -->
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Crie novas Reuniões</h4>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                    </div>
 
-                  <label for="organizador">ID do organizador:</label>
-                  <select name="organizador" id="organizador" required>
-                    @foreach ($usuarios as $user)
+                                    <!-- Modal body -->
+                                    <div class="modal-body">
+                                    <div class="container p-4">
+                                        <div class="row justify-content-center">
+                                            <div class="col-lg-10">
+                                            <h3 class="mb-4">Cadastro de Reuniões</h3>
+                                            <form action="{{ route('reunioes.store') }}" method="POST">
+                                                @csrf
+                                                <div class="mb-3">
+                                                    <label for="nome" class="form-label">Nome:</label>
+                                                    <input type="text" name="nome" id="nome" class="form-control" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="organizador" class="form-label">ID do organizador:</label>
+                                                    <select name="organizador" id="organizador" class="form-control" required>
+                                                        @foreach ($usuarios as $user)
+                                                        <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="sala" class="form-label">ID da sala:</label>
+                                                    <select name="sala" id="sala" class="form-control" required>
+                                                        @foreach ($espacos as $sala)
+                                                        <option value="{{ $sala->id }}">{{ $sala->des_sala }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="tipo" class="form-label">Tipo:</label>
+                                                    <select name="tipo" id="tipo" class="form-control" required>
+                                                        <option value="FISICA">FISICA</option>
+                                                        <option value="VIRTUAL">VIRTUAL</option>
+                                                    </select>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="dta_acontecimento" class="form-label">Data de Acontecimento:</label>
+                                                    <input type="datetime-local" name="dta_acontecimento" id="dta_acontecimento" class="form-control" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="dta_encerramento" class="form-label">Data de encerramento:</label>
+                                                    <input type="datetime-local" name="dta_encerramento" id="dta_encerramento" class="form-control" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                <label for="departamento" class="form-label">Departamento:</label>
+                                                    <select name="departamento" id="departamento" class="form-control" required>
+                                                        @foreach ($departamentos as $departamento)
+                                                        <option value="{{ $departamento->id }}">{{ $departamento->descricao_departamento }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                                <button type="submit" class="btn btn-primary">Criar Reunião</button>
+                                            </form>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
 
-                    <option value="{{ $user->id }}">{{ $user->name }}</option>
-                    @endforeach
-                  </select>
+                                <!-- Modal footer -->
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                                    </div>
 
-                </div>
-                <div class="form-group">
+                                </div>
+                            </div>
+                 </div>
 
-                  <label for="sala">ID da sala:</label>
-                  <select name="sala" id="sala" required>
-                    @foreach ($espacos as $sala)
 
-                    <option value="{{ $sala->id }}">{{ $sala->des_sala }}</option>
-                    @endforeach
-                  </select>
-                </div>
-                <div class="form-group">
 
-                  <label for="tipo">Tipo:</label>
-                  <select name="tipo" id="tipo" required>
-                    <option value="FISICA">FISICA</option>
-                    <option value="VIRTUAL">VIRTUAL</option>
-                  </select>
-
-                </div>
-                <div class="form-group">
-
-                  <label for="dta_acontecimento">Data de Acontecimento:</label>
-                  <input type="datetime-local" name="dta_acontecimento" id="dta_acontecimento" required>
-
-                </div>
-                <div class="form-group">
-                  <label for="dta_encerramento">Data de encerramento:</label>
-                  <input type="datetime-local" name="dta_encerramento" id="dta_encerramento" required>
-                </div>
-                <div class="form-group">
-                  <label for="departamento">Departamento:</label>
-                  <select name="departamento" id="departamento" required>
-                    @foreach ($departamentos as $departamento)
-                    <option value="{{ $departamento->id }}">{{ $departamento->descricao_departamento }}</option>
-                    @endforeach
-                  </select>
-                </div>
-
-                <button type="submit" class="btn btn-primary">Criar Reunião</button>
-                </form>
-              </div>
-            </div>
+               </div>
           </div>
         </div>
 
@@ -366,7 +389,10 @@
 
   <!-- Bootstrap core JavaScript-->
   <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+  <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script> -->
 
   <!-- Core plugin JavaScript-->
   <script src="{{asset('vendor/jquery-easing/jquery.easing.min.js')}}"></script>

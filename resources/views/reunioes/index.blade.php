@@ -28,7 +28,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('reunioes.create') }}" method="POST">
+                    <form action="{{ route('reunioes.store') }}" method="POST">
                         @csrf
                         <label for="nome">Nome:</label>
                         <input type="text" name="nome" id="nome" required>

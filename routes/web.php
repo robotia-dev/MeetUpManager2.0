@@ -41,6 +41,16 @@ Route::post('/sala', [SalaController::class, 'store'])->name('salas.create');
 
 
 Route::delete('/reunioes/{id}', [ReunioesController::class, 'destroy'])->name('reunioes.destroy');
+
+
+Route::delete('/sala/{id}', [SalaController::class, 'destroy'])->name('sala.destroy');
+
+
+
+Route::delete('/departamento/{id}', [DepartamentoController::class, 'destroy'])->name('departamento.destroy');
+
+
+
 Route::get('/painel', [ReunioesController::class, 'getInfoPanel']);
 
 Route::get('/admin', [ReunioesController::class, 'getDepartments']);
