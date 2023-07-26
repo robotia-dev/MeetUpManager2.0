@@ -14,12 +14,12 @@ return new class extends Migration
         Schema::create('GerencReunioes', function (Blueprint $table) {
             $table->string('_token', 50)->nullable();
             $table->id();
-            $table->dateTime('dta_acontecimento')->nullable();
             $table->decimal('duracao', 20, 6)->nullable();
             $table->string('nome')->nullable();
             $table->integer('organizador')->nullable();
             $table->string('tipo', 50)->nullable();
-            $table->dateTime('dta_encerramento')->nullable();
+            $table->timestamp('dta_acontecimento')->nullable(); 
+            $table->timestamp('dta_encerramento')->nullable(); 
             $table->timestamps();
             $table->integer('departamento')->nullable();
             $table->integer('sala')->nullable();

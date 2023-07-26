@@ -82,21 +82,46 @@ class ReunioesController extends Controller
 
    
 
-       
-    public function store(CreateReunioes $request)
+    
+
+
+public function store(CreateReunioes $request)
 {
-    $validate=Reunioes::whereBetween('dta_acontecimento', [date('Y-m-d H:i', strtotime($request->dta_acontecimento)), date('Y-m-d H:i', strtotime($request->dta_encerramento))])
-    ->orWhereBetween('dta_encerramento', [date('Y-m-d H:i', strtotime($request->dta_acontecimento)), date('Y-m-d H:i', strtotime($request->dta_acontecimento))])
-    ->first();
-    if ($validate){
-        return back()->with('error', 'Reunião não pode ser criada.');;
+    $dta_acontecimento = $request->dta_acontecimento;
+    $dta_encerramento = $request->dta_encerramento;
+    $sala = $request->sala;
+    $departamento = $request->departamento;
+
+    $checking_disponibilidade = Reunioes::where('sala', $sala)
+        ->where(function ($query) use ($dta_acontecimento, $dta_encerramento) {
+            $query->whereBetween('dta_acontecimento', [$dta_acontecimento, $dta_encerramento])
+                ->orWhereBetween('dta_encerramento', [$dta_acontecimento, $dta_encerramento]);
+        })
+        ->exists();
+
+    if ($checking_disponibilidade) {
+        return back()->with('error', 'Conflito de horário! Escolha outra sala disponível.');
     }
 
-    ($reuniao = Reunioes::create($request->all()));
-    
-        return back()->with('sucess', 'Reunião criada com sucesso.');
-   
+
+    $checking_departament_disponibilidade = Reunioes::where('departamento', $departamento)
+        ->where(function ($query) use ($dta_acontecimento, $dta_encerramento) {
+            $query->whereBetween('dta_acontecimento', [$dta_acontecimento, $dta_encerramento])
+                ->orWhereBetween('dta_encerramento', [$dta_acontecimento, $dta_encerramento]);
+        })
+        ->exists();
+
+    if ($checking_departament_disponibilidade) {
+        return back()->with('error', 'Seu departamento já tem uma reunião marcada para esse horário. Por favor, verifique as reuniões cadastradas.');
+    }
+
+    $reuniao = Reunioes::create($request->all());
+
+    return back()->with('success', 'Reunião criada com sucesso.');
 }
+
+
+
     public function edit($id)
     {
         $reuniao = Reunioes::readById($id);

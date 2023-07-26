@@ -81,7 +81,9 @@
 
           @if(session('sucess'))
 {{session('sucess')}}
-          @endif
+@endif
+
+
           <h1 class="h3 mb-0 text-gray-800">
             Bem-vindo ao Meet Up Manager
           </h1>
