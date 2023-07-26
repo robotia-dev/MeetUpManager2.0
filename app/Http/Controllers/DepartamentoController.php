@@ -16,8 +16,7 @@ class DepartamentoController extends Controller
             'nome' => 'required|string|max:255',
             'descricao_departamento' => 'nullable|string|max:255',
         ]);
-     //total de reunioes
-  
+     
     
         $departamento = new Departamento;
         $departamento->departamento = $request->input('nome');

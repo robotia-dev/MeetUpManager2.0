@@ -75,6 +75,13 @@
       <div class="container-fluid">
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
+          @if(session('error'))
+{{session('error')}}
+          @endif
+
+          @if(session('sucess'))
+{{session('sucess')}}
+          @endif
           <h1 class="h3 mb-0 text-gray-800">
             Bem-vindo ao Meet Up Manager
           </h1>
@@ -245,7 +252,7 @@
               <div class="card-body">
                 <div class="form">
                   <h3>Cadastro de Reuniões</h3>
-                  <form action="{{ route('reunioes.create') }}" method="POST">
+                  <form action="{{ route('reunioes.store') }}" method="POST">
                     @csrf
                     <label for="nome">Nome:</label>
                     <input type="text" name="nome" id="nome" required>
@@ -283,8 +290,8 @@
                 </div>
                 <div class="form-group">
 
-                  <label for="dta_criacao">Data de criação:</label>
-                  <input type="datetime-local" name="dta_criacao" id="dta_criacao" required>
+                  <label for="dta_acontecimento">Data de Acontecimento:</label>
+                  <input type="datetime-local" name="dta_acontecimento" id="dta_acontecimento" required>
 
                 </div>
                 <div class="form-group">

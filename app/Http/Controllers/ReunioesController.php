@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateReunioes;
 use Illuminate\Http\Request;
 use App\Models\Reunioes;
 use App\Models\Departamento;
@@ -48,7 +49,6 @@ class ReunioesController extends Controller
 
     public function getInfoPanel()
     {   
-        $setores = Departamento::readAll();
         //total de reunioes
         $reunioes = Reunioes::readAll();
         $totalReunioes = count($reunioes);
@@ -83,36 +83,19 @@ class ReunioesController extends Controller
    
 
        
-    public function store(Request $request)
+    public function store(CreateReunioes $request)
 {
-    try {
-        // Validar os dados do formulário
-        $validatedData = $request->validate([
-            'dta_acontecimento' => 'required|date',
-            'nome' => 'required|string',
-            'organizador' => 'nullable|integer',
-            'tipo' => 'nullable|string|max:50',
-            'dta_criacao' => 'nullable|date',
-            'dta_encerramento' => 'nullable|date',
-            'departamento' => 'nullable|integer',
-            'sala' => 'nullable|integer',
-            '_token' => 'nullable|string'
-        ]);
-
-        // Salvar a reunião no banco de dados
-        $reuniao = new Reunioes();
-        $reuniao->fill($validatedData);
-        $reuniao->save();
-
-        // Redirecionar para a página de painel
-        return redirect('/painel');
-    } catch (ValidationException $e) {
-        // Redirect back to the previous page with the error messages
-        return redirect()->back()->withErrors($e->errors());
-    } catch (Throwable $e) {
-        // Handle other exceptions
-        return redirect()->back()->with('error', 'Erro ao criar a reunião. Por favor, tente novamente mais tarde.');
+    $validate=Reunioes::whereBetween('dta_acontecimento', [date('Y-m-d H:i', strtotime($request->dta_acontecimento)), date('Y-m-d H:i', strtotime($request->dta_encerramento))])
+    ->orWhereBetween('dta_encerramento', [date('Y-m-d H:i', strtotime($request->dta_acontecimento)), date('Y-m-d H:i', strtotime($request->dta_acontecimento))])
+    ->first();
+    if ($validate){
+        return back()->with('error', 'Reunião não pode ser criada.');;
     }
+
+    ($reuniao = Reunioes::create($request->all()));
+    
+        return back()->with('sucess', 'Reunião criada com sucesso.');
+   
 }
     public function edit($id)
     {
@@ -126,9 +109,7 @@ class ReunioesController extends Controller
 
     public function update(Request $request, $id)
     {
-        // Validar os dados do formulário (opcional)
-
-        // Atualizar a reunião no banco de dados
+       
         $reuniao = Reunioes::readById($id);
         if ($reuniao) {
             $reuniao->update($request->all());

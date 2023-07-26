@@ -35,7 +35,7 @@ Route::get('/reunioes', [ReunioesController::class, 'index'])->name('reunioes.in
 
 Route::get('/reunioes-by_id', [ReunioesController::class, 'show'])->name('reunioes.show');
 
-Route::post('/reunioes', [ReunioesController::class, 'store'])->name('reunioes.create');
+Route::post('/reunioes/create', [ReunioesController::class, 'store'])->name('reunioes.store');
 
 Route::post('/sala', [SalaController::class, 'store'])->name('salas.create');
 
